@@ -4,7 +4,7 @@ export default {
       const userId = this.$auth.user.user_id
       const response = await this.$axios.$get(`/emocion/${userId}`)
       const emotions = {
-        attitudes: this.$tg.emotions.getGroup(1, response.data.emocion),
+        attitudes: this.$tg.emotions.getGroup(3, response.data.emocion),
         values: this.$tg.emotions.getGroup(2, response.data.emocion),
       }
       commit('SET_EMOTIONS', emotions)

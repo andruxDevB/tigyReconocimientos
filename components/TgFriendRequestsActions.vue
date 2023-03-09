@@ -1,7 +1,13 @@
 <template>
   <div class="-mt-px flex divide-x divide-gray-200">
     <div class="w-0 flex-1 flex">
-      <button :class="[baseClass, buttonClass]" @click="sidebarPriceToggle()">
+      <button
+        :class="[baseClass, buttonClass]"
+        @click="
+          sidebarPriceToggle()
+          nullFriendsForRecogniment()
+        "
+      >
         <common-tg-loading-circle v-if="loading" /> Dar reconocimiento
       </button>
     </div>
@@ -37,6 +43,7 @@ export default {
   methods: {
     ...mapMutations({
       sidebarPriceToggle: 'price/TOGGLE_SIDEBAR',
+      nullFriendsForRecogniment: 'price/NULL_FRIENDS_RECOGMENT',
     }),
   },
 }

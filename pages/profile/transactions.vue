@@ -6,7 +6,7 @@
         <common-tg-table-head>Descripción</common-tg-table-head>
         <common-tg-table-head>Fecha</common-tg-table-head>
         <common-tg-table-head>Monto</common-tg-table-head>
-        <common-tg-table-head>Saldo</common-tg-table-head>
+        <common-tg-table-head>Colaborador</common-tg-table-head>
       </template>
 
       <template #body>
@@ -29,7 +29,7 @@
             }}</tg-amount>
           </common-tg-table-row-cell>
           <common-tg-table-row-cell>{{
-            transaction.saldo
+            transaction.usuario1
           }}</common-tg-table-row-cell>
         </common-tg-table-row>
       </template>

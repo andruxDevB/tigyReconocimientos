@@ -85,6 +85,7 @@
                 <div class="flex-1 flex flex-col justify-between">
                   <div class="px-4 divide-y divide-gray-200 sm:px-6">
                     <div class="space-y-6 pt-6 pb-5">
+                      {{ friendsForRecogniment }}
                       <ValidationProvider
                         v-slot="{ errors }"
                         rules="required"
@@ -92,6 +93,7 @@
                         slim
                       >
                         <form-tg-drop-down
+                          v-if="friendsForRecogniment.length === 0"
                           v-model="price.contact"
                           :items="contacts"
                           :errors="errors"
@@ -99,6 +101,7 @@
                           name="contacto"
                         >
                           Selecciona un colaborador
+
                           <template #item="{ item, isCurrent }">
                             <FormTgDropDownItem
                               :is-current="isCurrent"
@@ -226,6 +229,9 @@ export default {
     },
     balance() {
       return this.$store.state.profile.balance
+    },
+    friendsForRecogniment() {
+      return this.$store.state.price.friendsForRecogniment
     },
   },
   mounted() {
