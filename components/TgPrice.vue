@@ -85,7 +85,6 @@
                 <div class="flex-1 flex flex-col justify-between">
                   <div class="px-4 divide-y divide-gray-200 sm:px-6">
                     <div class="space-y-6 pt-6 pb-5">
-                      {{ friendsForRecogniment }}
                       <ValidationProvider
                         v-slot="{ errors }"
                         rules="required"
@@ -93,7 +92,7 @@
                         slim
                       >
                         <form-tg-drop-down
-                          v-if="friendsForRecogniment.length === 0"
+                          v-if="friendsForRecogniment.length < 2"
                           v-model="price.contact"
                           :items="contacts"
                           :errors="errors"
@@ -117,8 +116,16 @@
                             />
                           </template>
                         </form-tg-drop-down>
+                        <!-- CUando tiene contactos seleccionado previamente-->
+                        <tg-price-selected-friends
+                          v-if="friendsForRecogniment.length > 1"
+                          v-model="price.contact"
+                          :friends="contactsSelected"
+                        >
+                          Colaboradores Seleccionados
+                        </tg-price-selected-friends>
                       </ValidationProvider>
-                      <ValidationProvider
+                      <!--<ValidationProvider
                         v-slot="{ errors }"
                         rules="required"
                         name="motivo"
@@ -130,7 +137,7 @@
                           :errors="errors"
                           >Escribe un motivo</form-tg-textarea
                         >
-                      </ValidationProvider>
+                      </ValidationProvider>-->
                       <ValidationProvider
                         v-slot="{ errors }"
                         rules="required"
@@ -208,8 +215,11 @@ export default {
   components: {},
   data() {
     return {
-      price: {},
+      price: {
+        contact: [],
+      },
       contacts: [],
+      contactsSelected: [],
       loading: false,
       loadingContacts: false,
     }
@@ -237,6 +247,13 @@ export default {
   mounted() {
     this.getContactList()
     this.$store.dispatch('emotions/getList')
+  },
+  updated() {
+    debugger
+    if (this.friendsForRecogniment.length > 0) {
+      this.contactsSelected = []
+      this.contactsSelected = this.filterContacts()
+    }
   },
   methods: {
     ...mapMutations({
@@ -276,6 +293,14 @@ export default {
       } finally {
         this.loading = false
       }
+    },
+    filterContacts() {
+      const newContacts = []
+      this.friendsForRecogniment.forEach((element) => {
+        const contact = this.contacts.find((contact) => contact.id === element)
+        newContacts.push(contact)
+      })
+      return newContacts
     },
   },
 }

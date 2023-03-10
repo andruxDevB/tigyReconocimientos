@@ -37,7 +37,7 @@
 
         <slot name="item" :tiem="item" :isActive="isChecked(item)">
           <form-tg-radio-group-item
-            :title="item.descripcion"
+            :title="item.name"
             :sub-title="item.definicion"
             :is-active="isChecked(item)"
           ></form-tg-radio-group-item>
