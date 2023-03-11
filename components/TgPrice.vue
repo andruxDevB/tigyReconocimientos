@@ -53,7 +53,10 @@
                       <button
                         type="button"
                         class="bg-purple-700 rounded-md text-purple-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
-                        @click="sidebarToggle()"
+                        @click="
+                          sidebarToggle()
+                          nullFriendsForRecogniments()
+                        "
                       >
                         <span class="sr-only">Close panel</span>
                         <svg
@@ -92,7 +95,7 @@
                         slim
                       >
                         <form-tg-drop-down
-                          v-if="friendsForRecogniment.length < 2"
+                          v-if="friendsForRecogniment.length == 0"
                           v-model="price.contact"
                           :items="contacts"
                           :errors="errors"
@@ -118,7 +121,7 @@
                         </form-tg-drop-down>
                         <!-- CUando tiene contactos seleccionado previamente-->
                         <tg-price-selected-friends
-                          v-if="friendsForRecogniment.length > 1"
+                          v-if="friendsForRecogniment.length >= 1"
                           v-model="price.contact"
                           :friends="contactsSelected"
                         >
@@ -192,7 +195,10 @@
                 <button
                   type="button"
                   class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                  @click="sidebarToggle()"
+                  @click="
+                    sidebarToggle()
+                    nullFriendsForRecogniments()
+                  "
                 >
                   Cancelar
                 </button>
@@ -249,7 +255,6 @@ export default {
     this.$store.dispatch('emotions/getList')
   },
   updated() {
-    debugger
     if (this.friendsForRecogniment.length > 0) {
       this.contactsSelected = []
       this.contactsSelected = this.filterContacts()
@@ -258,6 +263,7 @@ export default {
   methods: {
     ...mapMutations({
       sidebarToggle: 'price/TOGGLE_SIDEBAR',
+      nullFriendsForRecogniments: 'price/NULL_FRIENDS_RECOGMENT',
     }),
     async getContactList() {
       try {
@@ -279,6 +285,7 @@ export default {
           }
           await this.$store.dispatch('recognition/send', payload)
           this.sidebarToggle()
+          this.nullFriendsForRecogniments()
           this.price = {}
           this.$toast.success(
             'Reconocimiento enviado correctamente a tu contacto'

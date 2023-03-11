@@ -3,10 +3,11 @@
     <label class="block text-sm font-medium text-gray-700">
       <slot></slot>
     </label>
-    <div class="ml-3 flex flex-col">
+    <div class="flex flex-col space-y-3">
       <div
-        v-for="(item, index) in friends"
-        :key="`${item.name}-radio-${index}`"
+        v-for="item in friends"
+        :key="`${item.name}-radio`"
+        class="flex flex-row space-x-2"
       >
         <img
           v-if="item.image"

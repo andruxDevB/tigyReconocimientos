@@ -5,7 +5,7 @@
         :class="[baseClass, buttonClass]"
         @click="
           sidebarPriceToggle()
-          nullFriendsForRecogniment()
+          setFriendsRecogment([friend.id])
         "
       >
         <common-tg-loading-circle v-if="loading" /> Dar reconocimiento
@@ -43,7 +43,7 @@ export default {
   methods: {
     ...mapMutations({
       sidebarPriceToggle: 'price/TOGGLE_SIDEBAR',
-      nullFriendsForRecogniment: 'price/NULL_FRIENDS_RECOGMENT',
+      setFriendsRecogment: 'price/SET_FRIENDS_RECOGMENT',
     }),
   },
 }
